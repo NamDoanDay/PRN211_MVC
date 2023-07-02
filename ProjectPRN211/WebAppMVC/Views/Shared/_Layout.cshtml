@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor contxt;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,17 +19,43 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">....</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="SignIn">Sign in</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                         </li>
+
+                        @*<li>@Html.ActionLink("Đăng nhập","Index","Login")</li>*@
+
+                        @{
+                            int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
+                        }
+                        @if (userRole.HasValue && userRole.Value == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                            </li>
+                        }
+
+                            @*@if ((int)contxt.HttpContext.Session.GetInt32("UserRole")==1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                                </li>
+                            }*@
                     </ul>
+
+
+
                 </div>
             </div>
         </nav>
