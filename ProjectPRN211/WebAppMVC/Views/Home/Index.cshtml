@@ -1,8 +1,117 @@
-﻿@{
+﻿@using AppLibrary.Models;
+@model IEnumerable<AppLibrary.Models.BlogDetail>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<form asp-controller="Home" asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find Product: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+        </p>
+    </div>
+    <select name="categorySelect" onchange="this.form.submit()">
+        <option value="0">@ViewData["CurrentCategory"]</option>
+    @foreach (var category in (List<Category>)ViewData["Categories"])
+    {
+        <option value="@category.CategoryId" formaction="/Home/Index">@category.CategoryName</option>
+    }
+    </select>
+</form>
+@*<form asp-controller="Home" asp-action="Index" method="get">
+    <select name="categorySelect" onchange="this.form.submit()">
+        <option value="">All</option>
+        @foreach (var category in (List<Category>)ViewData["Categories"])
+        {
+            <option value="@category.CategoryId" formaction="/Home/Index">@category.CategoryName</option>
+        }
+    </select>
+</form>*@
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    
+    <h1 class="display-4">Mãi Đỉnh</h1>
 </div>
+  
+<h2>Danh sách Blog:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ImgBlogDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Blog)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImgBlogDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Blog.Id)
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@item.BlogDetailId">Edit</a> |
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.BlogDetailId">Details</a> |
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.BlogDetailId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Danh sách Product:</h2>
+@*@foreach (var product in (List<Product>)ViewData["Products"])
+{
+    <div>@product.SalePercent</div>
+    <div>@product.ProductName</div>
+
+}*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Giá sản phẩm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in (List<Product>)ViewData["Products"])
+        {
+            <tr>
+                <td>
+                    @product.ProductName
+                </td>
+                <td>
+                    @product.SellPrice
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.ProductId">Edit</a> |
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@product.ProductId">Details</a> |
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
