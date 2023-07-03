@@ -27,13 +27,16 @@ namespace WebAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userID = _context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).Select(u => u.UserId).FirstOrDefault();
                 var userRole = _context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).Select(u => u.RoleId).FirstOrDefault();
+                var userID = _context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).Select(u => u.UserId).FirstOrDefault();
+                var userName = _context.Users.Where(u => u.Username == user.Username && u.Password == user.Password).Select(u => u.Username).FirstOrDefault();
                 var userCheck = _context.Users.SingleOrDefault(u => u.Username == user.Username && u.Password == user.Password);
-
+                
+                
                 if (userCheck != null)
                 {
                     contxt.HttpContext.Session.SetInt32("userRole", (int)userRole);
+                    contxt.HttpContext.Session.SetInt32("userID", (int)userID);
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -57,6 +60,11 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
+        }
+        public IActionResult Logout()
+        {
+            contxt.HttpContext.Session.SetInt32("userRole", 0);
+            return RedirectToAction("Index", "Home");
         }
 
     }

@@ -43,8 +43,8 @@ namespace UniversityWebAppMVC.Controllers
             if(categorySelect!=0 && categorySelect!=null) {
                 products = products.Where(p => p.SubCategory.Category.CategoryId == categorySelect);
             }
-            ViewData["Products"] = products.ToList();
-            var blogs = _context.BlogDetails.Include(b => b.Blog);
+            ViewData["Products"] = products.Take(5).ToList();
+            var blogs = _context.BlogDetails.Include(b => b.Blog).Take(5);
             return View(blogs.ToList());
         }
 

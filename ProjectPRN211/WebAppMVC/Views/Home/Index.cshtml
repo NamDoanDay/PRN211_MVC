@@ -1,5 +1,6 @@
 ﻿@using AppLibrary.Models;
 @model IEnumerable<AppLibrary.Models.BlogDetail>
+@inject IHttpContextAccessor contxt;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -68,11 +69,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Blog.Id)
                 </td>
-                <td>
-                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@item.BlogDetailId">Edit</a> |
-                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.BlogDetailId">Details</a> |
-                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.BlogDetailId">Delete</a>
-                </td>
+                @{
+                    int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
+                }
+                @if(userRole.HasValue && userRole.Value==1)
+                {
+                    <td>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@item.BlogDetailId">Edit</a> |
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.BlogDetailId">Details</a> |
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.BlogDetailId">Delete</a>
+                    </td>
+                }
+                
             </tr>
         }
     </tbody>
@@ -106,11 +114,17 @@
                 <td>
                     @product.SellPrice
                 </td>
-                <td>
-                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.ProductId">Edit</a> |
-                    <a asp-controller="Home" asp-action="Details" asp-route-id="@product.ProductId">Details</a> |
-                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.ProductId">Delete</a>
-                </td>
+                @{
+                    int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
+                }
+                @if(userRole.HasValue&&userRole.Value==1)
+                {
+                    <td>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.ProductId">Edit</a> |
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@product.ProductId">Details</a> |
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.ProductId">Delete</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>
