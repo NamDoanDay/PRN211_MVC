@@ -19,10 +19,16 @@ namespace WebAppMVC.Controllers
         }
 
         // GET: Blogs
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string? searchString)
         {
-            var sWP391_OnlineShopContext = _context.Blogs.Include(b => b.Author);
-            return View(await sWP391_OnlineShopContext.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var blogs = from s in _context.Blogs select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                blogs = blogs.Where(s => s.BlogTitle.Contains(searchString));
+            }
+            return View(blogs.ToList());
         }
 
         // GET: Blogs/Details/5

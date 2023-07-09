@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AppLibrary.Models;
 using System.Data;
 using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
 
 namespace WebAppMVC.Controllers
 {
@@ -46,7 +47,6 @@ namespace WebAppMVC.Controllers
             {
                 return NotFound();
             }
-
             return View(orderDetail);
         }
 
@@ -68,12 +68,15 @@ namespace WebAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,ProductId,ProductName,ProductPrice,Quantity")] OrderDetail orderDetail)
+        public IActionResult Create(int? proID,[Bind("Id,OrderId,ProductId,ProductName,ProductPrice,Quantity")] OrderDetail orderDetail)
         {
-            if (ModelState.IsValid)
+            int productID = (int)proID;
+            //ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", orderDetail.ProductId);
+            if (productID != 0 && productID != null)
             {
-                _context.Add(orderDetail);
-                await _context.SaveChangesAsync();
+                //_context.Add(orderDetail);
+                //await _context.SaveChangesAsync();
                 var totalPriceInsert = orderDetail.Quantity * orderDetail.ProductPrice;
                 int? userIdInsert = contxt.HttpContext.Session.GetInt32("userID");
                 var statusInsert = 1;
@@ -85,16 +88,9 @@ namespace WebAppMVC.Controllers
                 };
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-
+                return RedirectToAction("Index", "Products");
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", orderDetail.ProductId);
-            
-            
             return View(orderDetail);
-
-
         }
 
         // GET: OrderDetails/Edit/5

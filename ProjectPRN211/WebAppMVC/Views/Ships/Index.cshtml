@@ -1,0 +1,84 @@
+﻿@model IEnumerable<AppLibrary.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách Ship</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.User.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.User.UserAddresses)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.Status)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.User.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.User.UserAddresses)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Status)
+                </td>
+                <td>
+                    @if (item.Order.Status == 1)
+                    {
+                        <text>Confirm</text>
+                    }
+                    else if (item.Order.Status == 2)
+                    {
+                        <text>Packaing</text>
+                    }
+                    else if (item.Order.Status == 3)
+                    {
+                        <text>Delivering</text>
+                    }
+                    else if (item.Order.Status >= 4 )
+                    {
+                        <text>Complete</text>
+                    }
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
