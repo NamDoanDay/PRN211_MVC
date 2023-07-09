@@ -26,21 +26,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-
                         @*<li>@Html.ActionLink("Đăng nhập","Index","Login")</li>*@
-
                         @{
                             int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
                             int? userId = contxt.HttpContext.Session.GetInt32("userID");
+                            string? userName = contxt.HttpContext.Session.GetString("userName");
                         }
-                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Product</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Blogs" asp-action="Index">Blog</a>
                         </li>
-
                         @if (!userRole.HasValue || userRole.Value==0)
                         {
                             <li class="nav-item">
@@ -55,33 +52,31 @@
                         {
                             @if (userRole.HasValue && userRole.Value > 1)
                             {
-                                <li class="nav-item nav-link text-dark" href="#">Xin chào: @ViewBag.userName </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Xin chào @ViewBag.userName</a>
+                                    <a class="nav-link text-dark" href="#">Xin chào: @userName</a>
                                 </li>
                             }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderDetails" asp-action="Index" asp-route-userID="@userId">Giỏ hàng</a>
+                            </li>
                             @if (userRole.HasValue && userRole.Value == 1)
                             {
-                                <li class="nav-item" href="#">Xin chào Admin @ViewBag.userName </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ships" asp-action="Index">Ship</a>
+                                </li>
+                                <li class="nav-item" href="#">
+                                    <a class="nav-link text-dark" href="#">Xin chào admin - @userName </a>
+                                </li>
+
                             }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderDetails" asp-action="Index" asp-route-userID="@userId">Giỏ hàng</a>
-                            </li>
+
                         }
-
-
-                            @*@if ((int)contxt.HttpContext.Session.GetInt32("UserRole")==1)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
-                                </li>
-                            }*@
                     </ul>
 
 

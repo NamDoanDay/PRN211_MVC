@@ -37,6 +37,7 @@ namespace WebAppMVC.Controllers
                 {
                     contxt.HttpContext.Session.SetInt32("userRole", (int)userRole);
                     contxt.HttpContext.Session.SetInt32("userID", (int)userID);
+                    contxt.HttpContext.Session.SetString("userName", userName);
                     return RedirectToAction("Index", "Home");
                 }
 

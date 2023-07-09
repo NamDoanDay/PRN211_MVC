@@ -22,10 +22,32 @@ namespace WebAppMVC.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string? searchString, int? categorySelect)
         {
-            var sWP391_OnlineShopContext = _context.Products.Include(p => p.Shop).Include(p => p.Status).Include(p => p.SubCategory);
-            return View(await sWP391_OnlineShopContext.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["Categories"] = _context.Categories.ToList();
+            ViewData["CurrentCategory"] = categorySelect;
+            if (categorySelect == 0 || categorySelect == null)
+            {
+                ViewData["CurrentCategory"] = "All";
+            }
+            else
+            {
+                ViewData["CurrentCategory"] = _context.Categories
+                .Where(c => c.CategoryId == categorySelect)
+                .Select(c => c.CategoryName)
+                .FirstOrDefault();
+            }
+            var products = from s in _context.Products select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(searchString));
+            }
+            if (categorySelect != 0 && categorySelect != null)
+            {
+                products = products.Where(p => p.SubCategory.Category.CategoryId == categorySelect);
+            }
+            return View( products.ToList());
         }
 
         // GET: Products/Details/5
