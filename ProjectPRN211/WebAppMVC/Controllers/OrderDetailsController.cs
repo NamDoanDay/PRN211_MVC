@@ -71,8 +71,6 @@ namespace WebAppMVC.Controllers
         public IActionResult Create(int? proID,[Bind("Id,OrderId,ProductId,ProductName,ProductPrice,Quantity")] OrderDetail orderDetail)
         {
             int productID = (int)proID;
-            //ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
-            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", orderDetail.ProductId);
             if (productID != 0 && productID != null)
             {
                 //_context.Add(orderDetail);
@@ -88,7 +86,20 @@ namespace WebAppMVC.Controllers
                 };
                 _context.Orders.Add(order);
                 _context.SaveChanges();
+                // lấy order id, productid, quantity, productname, price
+                var orderId = order.Id;
+                var productPrice = new OrderDetail
+                {
+                    OrderId = orderId,
+                    ProductId = productID,
+                    ProductName = orderDetail.ProductName.Trim(),
+                    ProductPrice = orderDetail.ProductPrice,
+                    Quantity = orderDetail.Quantity,
+                };
+                _context.OrderDetails.Add(productPrice); 
+                _context.SaveChanges();
                 return RedirectToAction("Index", "Products");
+
             }
             return View(orderDetail);
         }

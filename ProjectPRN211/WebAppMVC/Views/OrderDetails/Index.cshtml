@@ -24,10 +24,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Order)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th></th>
+            </th>*@
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -46,12 +46,27 @@
                 @Html.DisplayFor(modelItem => item.Order.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductId)
+                @if(item.Order.Status == 1){
+                        <h5>Pending ... </h5>
+                    }
+                    else if (item.Order.Status == 2)
+                    {
+                        <h5>Packing ... </h5>
+                    }
+                    else if (item.Order.Status == 3)
+                    {
+                        <h5>Delivering ... </h5>
+                    }
+                    else if (item.Order.Status >= 4)
+                    {
+                        <h5 style="color: green">Complete</h5>
+                    }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (item.Order.Status == 1)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Hủy đơn hàng</a>
+                    }
             </td>
         </tr>
 }
