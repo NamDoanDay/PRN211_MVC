@@ -46,24 +46,16 @@ namespace WebAppMVC.Controllers
         {
             if (orderId == null || status == null)
             {
-                return BadRequest(); // Xử lý trường hợp orderId hoặc status không hợp lệ
+                return BadRequest();
             }
-
-            // Lấy đối tượng Order từ cơ sở dữ liệu dựa trên orderId
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
-
+            var order = _context.Orders.FirstOrDefault(o => o.Id == orderId);
             if (order == null)
             {
-                return NotFound(); // Xử lý trường hợp không tìm thấy đối tượng Order với orderId tương ứng
+                return NotFound(); 
             }
-
-            // Cập nhật thuộc tính Status của đối tượng Order
             order.Status = status.Value;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
             _context.SaveChanges();
-
-            return RedirectToAction("Index"); // Chẳng hạn, chuyển hướng đến action Index
+            return View(nameof(Index));
         }
     }
 }
