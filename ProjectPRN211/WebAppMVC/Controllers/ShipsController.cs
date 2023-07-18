@@ -48,14 +48,15 @@ namespace WebAppMVC.Controllers
             {
                 return BadRequest();
             }
-            var order = _context.Orders.FirstOrDefault(o => o.Id == orderId);
-            if (order == null)
+            var orderInf = _context.Orders.FirstOrDefault(o => o.Id == orderId);
+            if (orderInf == null)
             {
                 return NotFound(); 
             }
-            order.Status = status.Value;
+            orderInf.Status = status.Value;
+            _context.Update(orderInf);
             _context.SaveChanges();
-            return View(nameof(Index));
+            return RedirectToAction("Index");
         }
     }
 }
