@@ -57,7 +57,10 @@
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderDetails" asp-action="Index" asp-route-userID="@userId">Giỏ hàng</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderDetails" asp-action="Index" asp-route-userID="@userId">Thanh toán</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index" asp-route-userID="@userId">Giỏ hàng</a>
                             </li>
                             @if (userRole.HasValue && userRole.Value == 1)
                             {

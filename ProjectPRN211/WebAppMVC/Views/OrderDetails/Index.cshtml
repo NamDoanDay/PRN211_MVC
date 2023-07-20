@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Giỏ hàng</h1>
 
 @*<p>
     <a asp-action="Create">Create New</a>
@@ -47,7 +47,7 @@
             </td>
             <td>
                 @if(item.Order.Status == 1){
-                        <h5>Pending ... </h5>
+                        <h5 style="color: red">Pending ... </h5>
                     }
                     else if (item.Order.Status == 2)
                     {
@@ -60,6 +60,7 @@
                     else if (item.Order.Status >= 4)
                     {
                         <h5 style="color: green">Complete</h5>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
                     }
             </td>
             <td>
