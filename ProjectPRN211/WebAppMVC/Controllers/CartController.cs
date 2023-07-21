@@ -15,7 +15,7 @@ namespace WebAppMVC.Controllers
             _context = context;
             contxt = httpContextAccessor;
         }
-        public IActionResult Index1(int? userId)
+        public IActionResult Index(int? userId)
         {
             var cart = _context.Carts.Include(c => c.Product).Where(p=>p.UserId== userId).ToList();
             return View(cart);
@@ -39,7 +39,7 @@ namespace WebAppMVC.Controllers
             string deleteQuery = $"DELETE FROM Cart WHERE ProductID = {id} AND UserID = {userId}";
             _context.Database.ExecuteSqlRaw(deleteQuery);
 
-            return RedirectToAction("Index1", new { userId = userId });
+            return RedirectToAction("Index", new { userId = userId });
         }
 
     }
