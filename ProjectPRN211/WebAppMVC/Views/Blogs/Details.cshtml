@@ -40,11 +40,8 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BlogContent)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageLink)
-        </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageLink)
+            <img src="~/resources/img/blog/@(Model.ImageLink)" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Author)

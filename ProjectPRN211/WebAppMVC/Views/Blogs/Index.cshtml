@@ -72,7 +72,8 @@
                 @Html.DisplayFor(modelItem => item.BlogContent)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageLink)
+                    <img style="height:300px ; width:200px" src="~/resources/img/blog/@(item.ImageLink)" />
+              
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Author.UserId)
