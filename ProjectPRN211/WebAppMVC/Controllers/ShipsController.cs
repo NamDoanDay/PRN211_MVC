@@ -77,5 +77,19 @@ namespace WebAppMVC.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public IActionResult Accept(int? id)
+        {
+            int orderId = (int)_context.OrderDetails.Where(o => o.Id == id).Select(p => p.OrderId).FirstOrDefault();
+            var order = _context.Orders.Where(o => o.Id == orderId).FirstOrDefault();
+            if (order != null)
+            {
+                // Change the "Status" property to 2
+                order.Status = 2;
+
+                // Save the changes to the database
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

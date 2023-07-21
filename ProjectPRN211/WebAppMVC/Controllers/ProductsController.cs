@@ -214,15 +214,10 @@ namespace WebAppMVC.Controllers
 
         public IActionResult AddCart(int? proId)
         {
-            int leng = _context.Cart2s.ToList().Count;
-            var cart = new Cart2
-            {
-                id = leng + 1,
-                proId = (int)proId,
-                uId = (int)contxt.HttpContext.Session.GetInt32("userID"),
-        };
-            _context.Cart2s.Add(cart);
-            _context.SaveChanges();
+            int? userId = (int)contxt.HttpContext.Session.GetInt32("userID");
+            int amount = 0;
+            string insertQuery = $"INSERT INTO Cart (ProductID, UserID,Amount) VALUES ({proId}, {userId},{amount})";
+            _context.Database.ExecuteSqlRaw(insertQuery);
             return RedirectToAction("Index", "Home");
         }
     }

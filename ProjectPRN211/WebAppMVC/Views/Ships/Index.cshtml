@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<AppLibrary.Models.OrderDetail>
+@inject IHttpContextAccessor contxt;
 
 @{
     ViewData["Title"] = "Index";
@@ -59,11 +60,11 @@
                 <td>
                     @if (item.Order.Status == 1)
                     {
-                        <h5>Confirm</h5>
+                        <h5 style="color: red">Shipper Confirm</h5>
                     }
                     else if (item.Order.Status == 2)
                     {
-                        <h5>Packaing</h5>
+                        <h5 style="color: green">Packaing</h5>
                     }
                     else if (item.Order.Status == 3)
                     {
@@ -76,10 +77,24 @@
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    @if (item.Order.Status >= 4)
+                    @{
+                        int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
+                    }
+                    @if (item.Order.Status == 1 && userRole == 4)
                     {
-                        <a asp-action="Remove" asp-route-id="@item.Id">Remove</a>
+                        <a asp-action="Accept" asp-route-id="@item.Id">Nhận</a>
+                    }
+                    @if (userRole == 4 && item.Order.Status <= 3 && item.Order.Status >= 2)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a>
+                    }
+                    @if (userRole == 1)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Chi tiết đơn</a>
+                    }
+                    @if (item.Order.Status >= 4 && userRole == 1)
+                    {
+                        <a asp-action="Remove" asp-route-id="@item.Id">|| Xóa</a>
                     }
                 </td>
             </tr>
