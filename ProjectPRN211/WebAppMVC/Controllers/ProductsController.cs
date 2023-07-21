@@ -212,9 +212,13 @@ namespace WebAppMVC.Controllers
             return RedirectToAction("Create", "OrderDetails",new { proId = proId });
         }
 
-        //public IActionResult AddCart(int? proId)
-        //{
-
-        //}
+        public IActionResult AddCart(int? proId)
+        {
+            int? userId = (int)contxt.HttpContext.Session.GetInt32("userID");
+            int amount = 0;
+            string insertQuery = $"INSERT INTO Cart (ProductID, UserID,Amount) VALUES ({proId}, {userId},{amount})";
+            _context.Database.ExecuteSqlRaw(insertQuery);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

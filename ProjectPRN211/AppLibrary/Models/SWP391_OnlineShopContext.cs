@@ -21,6 +21,7 @@ namespace AppLibrary.Models
         public virtual DbSet<Blog> Blogs { get; set; } = null!;
         public virtual DbSet<BlogDetail> BlogDetails { get; set; } = null!;
         public virtual DbSet<Cart> Carts { get; set; } = null!;
+        public virtual DbSet<Cart2> Cart2s { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<ChatRoom> ChatRooms { get; set; } = null!;
         public virtual DbSet<Delivery> Deliveries { get; set; } = null!;
@@ -141,6 +142,27 @@ namespace AppLibrary.Models
                     .WithMany()
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("userID_in_cart");
+            });
+
+            modelBuilder.Entity<Cart2>(entity =>
+            {
+                entity.ToTable("Cart2");
+
+                entity.Property(e => e.id).HasColumnName("id");
+
+                entity.Property(e => e.proId).HasColumnName("proId");
+
+                entity.Property(e => e.uId).HasColumnName("uId");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany()
+                    .HasForeignKey(d => d.proId)
+                    .HasConstraintName("FK_Cart2_Product");
+
+                entity.HasOne(d => d.User)
+                    .WithMany()
+                    .HasForeignKey(d => d.uId)
+                    .HasConstraintName("FK_Cart2_Users");
             });
 
             modelBuilder.Entity<Category>(entity =>
