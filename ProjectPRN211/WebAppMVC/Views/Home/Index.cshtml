@@ -140,6 +140,9 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            List<ProductImg> IMG = (List<ProductImg>)ViewData["IMG"];
+        }
         @foreach (var product in (List<Product>)ViewData["Products"])
         {
             <tr>
@@ -148,6 +151,9 @@
                 </td>
                 <td>
                     @product.SellPrice
+                </td>
+                <td>
+                    @IMG.Where(x=>x.ProductId==product.ProductId).FirstOrDefault().ProductImgUrl;
                 </td>
                 @{
                     int? userRole = contxt.HttpContext.Session.GetInt32("userRole");

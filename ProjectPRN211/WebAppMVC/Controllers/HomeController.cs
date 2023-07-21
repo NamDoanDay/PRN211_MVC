@@ -36,6 +36,8 @@ namespace UniversityWebAppMVC.Controllers
             }
 
             var products = from s in _context.Products select s;
+            var img = _context.ProductImgs.ToList();
+            ViewData["IMG"] = img;
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.ProductName.Contains(searchString));
