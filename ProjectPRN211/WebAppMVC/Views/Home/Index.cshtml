@@ -140,9 +140,6 @@
         </tr>
     </thead>
     <tbody>
-        @{
-            List<ProductImg> IMG = (List<ProductImg>)ViewData["IMG"];
-        }
         @foreach (var product in (List<Product>)ViewData["Products"])
         {
             <tr>
