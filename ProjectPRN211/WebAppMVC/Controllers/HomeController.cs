@@ -36,6 +36,11 @@ namespace UniversityWebAppMVC.Controllers
             }
 
             var products = from s in _context.Products select s;
+            //var img = _context.ProductImgs.ToList();
+            //foreach (var item in products)
+            //{
+            //    item.imageLink = img.Where(x => x.ProductId == item.ProductId).FirstOrDefault().ProductImgUrl.ToString();
+            //}
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.ProductName.Contains(searchString));

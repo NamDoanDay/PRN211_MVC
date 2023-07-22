@@ -39,6 +39,11 @@ namespace WebAppMVC.Controllers
                 .FirstOrDefault();
             }
             var products = from s in _context.Products select s;
+            //var img = _context.ProductImgs.ToList();
+            //foreach (var item in products)
+            //{
+            //    item.imageLink = img.Where(x => x.ProductId == item.ProductId).FirstOrDefault().ProductImgUrl.ToString();
+            //}
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.ProductName.Contains(searchString));
@@ -94,7 +99,7 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ShopId"] = new SelectList(_context.Users, "UserId", "UserId", product.ShopId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.StatusId);
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.Status);
             ViewData["SubCategoryId"] = new SelectList(_context.SubCategories, "SubCategoryId", "SubCategoryId", product.SubCategoryId);
             return View(product);
         }
@@ -113,7 +118,7 @@ namespace WebAppMVC.Controllers
                 return NotFound();
             }
             ViewData["ShopId"] = new SelectList(_context.Users, "UserId", "UserId", product.ShopId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.StatusId);
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.Status);
             ViewData["SubCategoryId"] = new SelectList(_context.SubCategories, "SubCategoryId", "SubCategoryId", product.SubCategoryId);
             return View(product);
         }
@@ -151,7 +156,7 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ShopId"] = new SelectList(_context.Users, "UserId", "UserId", product.ShopId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.StatusId);
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusId", product.Status);
             ViewData["SubCategoryId"] = new SelectList(_context.SubCategories, "SubCategoryId", "SubCategoryId", product.SubCategoryId);
             return View(product);
         }

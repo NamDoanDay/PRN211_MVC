@@ -484,9 +484,9 @@ namespace AppLibrary.Models
                 entity.Property(e => e.SellPrice).HasColumnType("money");
 
                 entity.Property(e => e.ShopId).HasColumnName("ShopID");
-
+/*
                 entity.Property(e => e.StatusId).HasColumnName("StatusID");
-
+*/
                 entity.Property(e => e.SubCategoryId).HasColumnName("SubCategoryID");
 
                 entity.HasOne(d => d.Shop)
@@ -496,7 +496,7 @@ namespace AppLibrary.Models
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.StatusId)
+/*                    .HasForeignKey(d => d.StatusId)*/
                     .HasConstraintName("StatusID_in_Status");
 
                 entity.HasOne(d => d.SubCategory)

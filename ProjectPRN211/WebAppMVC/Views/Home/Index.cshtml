@@ -140,6 +140,7 @@
         </tr>
     </thead>
     <tbody>
+        
         @foreach (var product in (List<Product>)ViewData["Products"])
         {
             <tr>
@@ -148,6 +149,9 @@
                 </td>
                 <td>
                     @product.SellPrice
+                </td>
+                <td>
+                   @(product.imageLink)
                 </td>
                 @{
                     int? userRole = contxt.HttpContext.Session.GetInt32("userRole");
