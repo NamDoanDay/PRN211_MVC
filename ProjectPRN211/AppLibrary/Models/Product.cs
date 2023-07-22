@@ -20,7 +20,6 @@ namespace AppLibrary.Models
         public int? SubCategoryId { get; set; }
         public int? ShopId { get; set; }
         public int? Amount { get; set; }
-        public int? StatuxsId { get; set; }
 
         public virtual User? Shop { get; set; }
         public virtual ProductStatus? Status { get; set; }
